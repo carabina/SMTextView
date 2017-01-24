@@ -9,63 +9,10 @@
 import UIKit
 
 @IBDesignable
-class SMTextView: UITextView {
+public class SMTextView: UITextView {
     
     //MARK: Variables
     var placeholderTextView: UITextView!
-    
-    
-    //MARK: Initialization
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init(frame: frame, textContainer: textContainer)
-        initPlaceholder()
-    }
-    
-    func initPlaceholder() {
-        placeholderTextView = UITextView(frame: bounds)
-        placeholderTextView.textContainerInset = textContainerInset
-        placeholderTextView.text = self.placeholder
-        placeholderTextView.font = font
-        placeholderTextView.textColor = self.placeholderColor
-        placeholderTextView.backgroundColor = .clear
-        placeholderTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(placeholderTapped)))
-        self.addSubview(placeholderTextView)
-    }
-    
-    
-    //MARK: Overrides
-    override func becomeFirstResponder() -> Bool {
-        super.becomeFirstResponder()
-        placeholderTextView.isHidden = true
-        return true
-    }
-    
-    override func resignFirstResponder() -> Bool {
-        super.resignFirstResponder()
-        if placeholderTextView != nil {
-            if self.text.characters.count > 0 {
-                placeholderTextView.isHidden = true
-            }else {
-                placeholderTextView.isHidden = false
-            }
-        }
-        return true
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        initPlaceholder()
-    }
-    
-    
-    //MARK: Actions
-    func placeholderTapped(_ recognizer: UITapGestureRecognizer) {
-        _ = self.becomeFirstResponder()
-    }
     
     
     //MARK: IBInspectables
@@ -119,9 +66,61 @@ class SMTextView: UITextView {
         }
     }
     
-    override func prepareForInterfaceBuilder() {
+    override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         textContainerInset = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
         initPlaceholder()
+    }
+    
+    //MARK: Initialization
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        initPlaceholder()
+    }
+    
+    func initPlaceholder() {
+        placeholderTextView = UITextView(frame: bounds)
+        placeholderTextView.textContainerInset = textContainerInset
+        placeholderTextView.text = self.placeholder
+        placeholderTextView.font = font
+        placeholderTextView.textColor = self.placeholderColor
+        placeholderTextView.backgroundColor = .clear
+        placeholderTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(placeholderTapped)))
+        self.addSubview(placeholderTextView)
+    }
+    
+    
+    //MARK: Overrides
+    override public func becomeFirstResponder() -> Bool {
+        super.becomeFirstResponder()
+        placeholderTextView.isHidden = true
+        return true
+    }
+    
+    override public func resignFirstResponder() -> Bool {
+        super.resignFirstResponder()
+        if placeholderTextView != nil {
+            if self.text.characters.count > 0 {
+                placeholderTextView.isHidden = true
+            }else {
+                placeholderTextView.isHidden = false
+            }
+        }
+        return true
+    }
+    
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        initPlaceholder()
+    }
+    
+    
+    //MARK: Actions
+    func placeholderTapped(_ recognizer: UITapGestureRecognizer) {
+        _ = self.becomeFirstResponder()
     }
 }
